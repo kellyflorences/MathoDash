@@ -24,6 +24,8 @@ struct GameData: Codable{
     var HostPlayerData : Player?
     var PlayerPlayerData : Player?
     
+    var rounds : Int?
+    
 //    Game State
     var gameState : State
     

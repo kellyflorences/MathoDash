@@ -72,6 +72,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.matchManager = matchManager
         super.init(size: size)
         
+//        set start position (won't change inGame)
+        playerStartPos = matchManager.myPosition
+        opponentStartPos = matchManager.opponentPosition
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -131,11 +135,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             wrongAns()
         }else if node.name == "finish_correct"{
             print("BENAR WKWK")
-            doneFinish(win: false) //ini boolean diisi true/false berdasarkan player nya menang ato kalah
+            doneFinish(win: true) //ini boolean diisi true/false berdasarkan player nya menang ato kalah
         }
     }
     
     func wrongAns(){
+        isStart = false
         alertLabel = SKLabelNode(fontNamed: "AvenirNext-HeavyItalic")
         alertLabel.text = "Wrong Answer"
         alertLabel.fontSize = 80
@@ -154,6 +159,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [self] in
             rmDimBG()
             createPlayer()
+            isStart = true
             alertLabel.removeFromParent()
         }
     }
@@ -363,8 +369,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let time = Double(counter) + 0.5
         DispatchQueue.main.asyncAfter(deadline: .now() + time) { [self] in
             loadGravity()
-            playerStartPos = matchManager.myPosition
-            opponentStartPos = matchManager.opponentPosition
+            
             self.createPlayer()
             self.createOpponent()
             isStart = true
@@ -428,7 +433,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 // Handle button tap action here
                 print("Play button tapped!")
                 rmDimBG()
-                createPlayer()
+//                createPlayer()
                 alertLabel.removeFromParent()
                 readyBtn.removeFromParent()
                 nextRound()

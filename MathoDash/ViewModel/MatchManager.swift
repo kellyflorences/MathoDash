@@ -42,6 +42,9 @@ class MatchManager: UIViewController, ObservableObject, GKGameCenterControllerDe
     
     var loader = LoadMaze()
     
+//    round indicator
+    var round = 1
+    
 //    Score Variable
     var scores : [Int] = [0, 0]
     
@@ -187,7 +190,7 @@ class MatchManager: UIViewController, ObservableObject, GKGameCenterControllerDe
             let opponentPositionY = (opponentPosition.y - loader.marginBottom) / CGFloat(loader.squareMinSize)
             
 //            generate gameData
-            coreGameData = GameData(HostPlayerData: localPlayerData, PlayerPlayerData: otherPlayerData, gameState: State.startGame, startGame: StartGame(PlayerPosition: CGPoint(x: opponentPositionX, y: opponentPositionY) , HostPosition: CGPoint(x: myPositionX, y: myPositionY), isFinished: false))
+            coreGameData = GameData(HostPlayerData: localPlayerData, PlayerPlayerData: otherPlayerData, rounds: round, gameState: State.startGame, startGame: StartGame(PlayerPosition: CGPoint(x: opponentPositionX, y: opponentPositionY) , HostPosition: CGPoint(x: myPositionX, y: myPositionY), isFinished: false))
             
             //send to other player
             sendGameData(data: coreGameData!)
@@ -221,6 +224,9 @@ class MatchManager: UIViewController, ObservableObject, GKGameCenterControllerDe
             print("gameState Host: ", gameData.gameState)
 //            Kalau yang menerima host
             switch gameState{
+            case .lobby:
+                break
+                
             case .startGame:
                 
 //                Kalau player sudah selesai
@@ -235,11 +241,16 @@ class MatchManager: UIViewController, ObservableObject, GKGameCenterControllerDe
                     
                 }
                 break
-                
-            case .lobby:
-                break
+
             case .endOfRound:
-                
+                if gameData.endOfRound?.isPlayerReady == true{
+//                    set new rounds
+                    round += 1
+                    
+//                   set new data
+                    
+                    
+                }
                 break
             case .endOfGame:
                 break
