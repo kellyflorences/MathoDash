@@ -429,7 +429,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
             let location = touch.location(in: self)
-            if readyBtn.contains(location) {
+            if let readyBtn = readyBtn, readyBtn.contains(location)  {
                 // Handle button tap action here
                 print("Play button tapped!")
                 rmDimBG()
