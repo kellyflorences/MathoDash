@@ -60,6 +60,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //alert text for wrong answers
     private var alertLabel: SKLabelNode!
     private var questionLabel: SKLabelNode!
+    private var readyBtn: SKSpriteNode!
+
     
     var dimmed = SKSpriteNode()
     
@@ -126,21 +128,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }else if node.name == "finish"{
             print("SALAH WKWK")
-            doneFinish(wrong: true)
+            wrongAns()
         }else if node.name == "finish_correct"{
             print("BENAR WKWK")
-            doneFinish(wrong: false)
+            doneFinish(win: false) //ini boolean diisi true/false berdasarkan player nya menang ato kalah
         }
     }
     
-    // This method is called in the GameViewController to set the xAcceleration value
-    func updateXAcceleration(_ acceleration: CGFloat) {
-        xAcceleration = acceleration
-    }
-    
-    func doneFinish(wrong: Bool){
-        isStart = false
+    func wrongAns(){
         alertLabel = SKLabelNode(fontNamed: "AvenirNext-HeavyItalic")
+        alertLabel.text = "Wrong Answer"
         alertLabel.fontSize = 80
         alertLabel.position = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2)
         alertLabel.zPosition = dimmed.zPosition + 1
@@ -150,26 +147,49 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         dimBG()
         
         player.physicsBody?.isDynamic = false
-        player.removeFromParent()
-        playerName.removeFromParent()
-        
-        if(wrong){
-            alertLabel.text = "Wrong Answer"
-        }else{
-            alertLabel.text = "You Win!"
-        }
+        let remove = SKAction.removeFromParent()
+        player.run(remove)
+        playerName.run(remove)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [self] in
-            if(wrong){
-                rmDimBG()
-                createPlayer()
-                isStart = true
-                alertLabel.removeFromParent()
-            }else{
-                //kalo player menang..
-                nextRound()
-            }
+            rmDimBG()
+            createPlayer()
+            alertLabel.removeFromParent()
         }
+    }
+    
+    // This method is called in the GameViewController to set the xAcceleration value
+    func updateXAcceleration(_ acceleration: CGFloat) {
+        xAcceleration = acceleration
+    }
+    
+    func doneFinish(win: Bool){
+        alertLabel = SKLabelNode(fontNamed: "AvenirNext-HeavyItalic")
+        alertLabel.fontSize = 80
+        alertLabel.position = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2 + CGFloat(loader.squareMinSize * 3))
+        alertLabel.zPosition = dimmed.zPosition + 1
+        alertLabel.verticalAlignmentMode = .center
+        alertLabel.fontColor = UIColor(Color("lightYellow"))
+        self.addChild(alertLabel)
+        dimBG()
+        
+        player.physicsBody?.isDynamic = false
+        let remove = SKAction.removeFromParent()
+        player.run(remove)
+        playerName.run(remove)
+        
+        if(win){
+            alertLabel.text = "You Win!"
+        }else{
+            alertLabel.text = "You Lost!"
+        }
+        
+        readyBtn = SKSpriteNode(imageNamed: "ready")
+        readyBtn.name = "readyBtn"
+        readyBtn.size = CGSize(width: Double(loader.squareMinSize * 8.0), height: Double(loader.squareMinSize * 2.0))
+        readyBtn.position = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2 - CGFloat(loader.squareMinSize))
+        readyBtn.zPosition = alertLabel.zPosition
+        self.addChild(readyBtn)
     }
     
     func nextRound(){
@@ -401,8 +421,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch in touches {
+            let location = touch.location(in: self)
+            if readyBtn.contains(location) {
+                // Handle button tap action here
+                print("Play button tapped!")
+                rmDimBG()
+                createPlayer()
+                alertLabel.removeFromParent()
+                readyBtn.removeFromParent()
+                nextRound()
+            }
+        }
+    }
+    
     override func update(_ currentTime: TimeInterval) {
-        
 //        update player name position
         playerName.position = CGPoint(x: player.position.x, y: player.position.y - CGFloat(loader.squareMinSize / 1.5))
         
