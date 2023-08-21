@@ -32,7 +32,9 @@ struct ContentView: View {
                     matchManager.authenticateUser()
                 }
             } else if matchManager.gameState.rawValue > 0 &&  matchManager.gameState.rawValue  < 3 {
-                GameView()
+                GameView(matchManager: matchManager)
+            }else{
+//                panggil game over view
             }
 
         }

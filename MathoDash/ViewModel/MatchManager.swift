@@ -42,8 +42,6 @@ class MatchManager: UIViewController, ObservableObject, GKGameCenterControllerDe
     
     var loader = LoadMaze()
     
-    
-    
 //    Score Variable
     var scores : [Int] = [0, 0]
     
@@ -163,15 +161,15 @@ class MatchManager: UIViewController, ObservableObject, GKGameCenterControllerDe
         self.match = match
         match.delegate = self
         
+//        get Opponent Data
+        otherPlayer = match.players.first
+        otherPlayerData = Player(gamePlayerID: otherPlayer!.gamePlayerID, role: Role.player)
+        
         // cek role
         // Kalau host, send gameData
         if localPlayerData.role == .host {
             
-            otherPlayer = match.players.first
-            otherPlayerData = Player(gamePlayerID: otherPlayer!.gamePlayerID, role: Role.player)
-            
             //        Load game maps
-//            loader.drawBoard()
             loader.loadMazeRound()
             
 //            set starting point on host device
@@ -255,6 +253,7 @@ class MatchManager: UIViewController, ObservableObject, GKGameCenterControllerDe
             case .lobby:
 //                samain coreGameData
                 coreGameData = gameData
+                
                 
 //                samain role
                 if localPlayer.gamePlayerID == gameData.HostPlayerData?.gamePlayerID{

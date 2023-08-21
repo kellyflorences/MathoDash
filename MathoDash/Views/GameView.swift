@@ -16,13 +16,29 @@ enum CollisionTypes: UInt32 {
     case spike = 4
     case finish = 8
     case finish_correct = 16
+    case opponent = 32
 }
 
+
 class GameScene: SKScene, SKPhysicsContactDelegate {
+    
     
     let manager : CMMotionManager = CMMotionManager()
     let loader = LoadMaze()
     let solve = MathSolver()
+    var matchManager: MatchManager
+    
+    //    Sprite init
+    //    Sprite setup variable
+    var playerTextureArray = [SKTexture]()
+    var opponentTextureArray = [SKTexture]()
+    var player = SKSpriteNode()
+    var opponent = SKSpriteNode()
+    var playerName = SKLabelNode()
+    var opponentName = SKLabelNode()
+    
+    var playerStartPos = CGPoint()
+    var opponentStartPos = CGPoint()
     
     //    get accelerometer data
     private var accelerometerData: CMAcceleration?
@@ -36,15 +52,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var isOnGround = true
     private var isJumpEnabled: Bool = true // Flag to track jump availability
     
-    
-    private var label : SKLabelNode?
-    private var spinnyNode : SKShapeNode?
-    
-    //    Sprite setup variable
-    var textureArray = [SKTexture]()
-    var slime = SKSpriteNode()
-    var playerName = SKLabelNode()
-    
     // timer countdown
     private var countdownLabel: SKLabelNode!
     private var counter: Int = 7
@@ -55,8 +62,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private var questionLabel: SKLabelNode!
     
     var dimmed = SKSpriteNode()
+    
+//    flag to track data transmit
+    var isStart = false
+    
+    init(size: CGSize,matchManager: MatchManager) {
+        self.matchManager = matchManager
+        super.init(size: size)
         
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func didMove(to view: SKView) {
+        
+        //        Load game maps
 //        loader.drawBoard()
         loader.loadMazeRound()
         self.addChild(loader.mazeObstacles)
@@ -64,92 +86,43 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.scaleMode = .aspectFill
         self.addChild(loader.pinggiranMap)
         
-        loader.loadAnswers()
+        //        Set sprite appearance
+        setSprite()
         
-        //countdown
+        //generate question
+        loader.loadAnswers()
+   
         startCountdown()
         dimBG()
-        
     }
-   
+    
     //   Setting up collision between object
     func didBegin(_ contact: SKPhysicsContact){
         guard let nodeA = contact.bodyA.node else { return }
         guard let nodeB = contact.bodyB.node else { return }
         
-        
-        if nodeA == slime {
+//        print("didBegin sih")
+        if nodeA == player {
+//            print("masuk nodeA")
             playerCollided(with: nodeB)
-        } else if nodeB == slime {
+        } else if nodeB == player {
+//            print("masuk nodeB")
             playerCollided(with: nodeA)
         }
-    }
-    
-    func createSpike(){
-        //        Obstacle
-        let node = SKSpriteNode(color: .blue, size: CGSize(width: 100, height: 10))
-        node.name = "spike"
-        node.position = CGPoint(x: size.width/2, y: size.height/2)
-        node.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 100, height: 10))
-        
-        node.physicsBody?.affectedByGravity = false
-        node.physicsBody?.isDynamic = false
-        node.physicsBody?.categoryBitMask = CollisionTypes.spike.rawValue
-        node.physicsBody?.collisionBitMask = 0
-        node.physicsBody?.contactTestBitMask = CollisionTypes.player.rawValue
-        addChild(node)
-    }
-    
-    func createPlayer(){
-        slime.removeFromParent()
-        //        Adding slime texture
-        for i in 1...5{
-            let textureName = "slime_move_\(i)"
-            textureArray.append(SKTexture(imageNamed: textureName))
-        }
-        
-        //        adding slime sprite
-        if textureArray.count > 1{
-            let imageFrame = textureArray.first
-            let size = CGFloat(loader.squareMinSize)
-
-            slime = SKSpriteNode(texture: imageFrame)
-//            slime.position = CGPoint(x: size.width/2, y: size.height/3)
-            slime.position = CGPoint(x: Double(UIScreen.main.bounds.width/2), y: Double(loader.squareMinSize*1.5))
-            slime.size = CGSize(width: size, height: size)
-//            slime.physicsBody = SKPhysicsBody(texture: slime.texture!,size: slime.texture!.size())
-            slime.physicsBody = SKPhysicsBody(texture: slime.texture!,size: CGSize(width: size, height: size))
-            slime.physicsBody?.allowsRotation = false
-            slime.physicsBody?.categoryBitMask = CollisionTypes.player.rawValue
-            slime.physicsBody?.collisionBitMask = CollisionTypes.wall.rawValue
-            slime.physicsBody?.contactTestBitMask = CollisionTypes.spike.rawValue | CollisionTypes.finish.rawValue | CollisionTypes.finish_correct.rawValue
-            slime.zPosition = 1.0
-            addChild(slime)
-        }
-        
-        slime.run(SKAction.repeatForever(SKAction.animate(with: textureArray, timePerFrame: 0.1)))
-        
-        //add player name along with the slime
-        playerName.removeFromParent()
-        playerName.text = "kgraphy"
-        playerName.fontName = "AvenirNext-HeavyItalic"
-        playerName.color = .white
-        playerName.fontSize = 10
-        playerName.position = slime.position
-        playerName.zPosition = slime.zPosition
-        addChild(playerName)
     }
     
     func playerCollided(with node: SKNode){
         if node.name == "spike"{
             
-            slime.physicsBody?.isDynamic = false
-//            let remove = SKAction.removeFromParent()
-            slime.removeFromParent()
+            isStart = false
+            player.physicsBody?.isDynamic = false
+            player.removeFromParent()
             playerName.removeFromParent()
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [self] in
                 self.createPlayer()
+                isStart = true
+                
             }
         }else if node.name == "finish"{
             print("SALAH WKWK")
@@ -158,14 +131,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             print("BENAR WKWK")
             doneFinish(wrong: false)
         }
-        print("node nameme", node.name)
     }
+    
     // This method is called in the GameViewController to set the xAcceleration value
     func updateXAcceleration(_ acceleration: CGFloat) {
         xAcceleration = acceleration
     }
     
     func doneFinish(wrong: Bool){
+        isStart = false
         alertLabel = SKLabelNode(fontNamed: "AvenirNext-HeavyItalic")
         alertLabel.fontSize = 80
         alertLabel.position = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2)
@@ -175,10 +149,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(alertLabel)
         dimBG()
         
-        slime.physicsBody?.isDynamic = false
-        let remove = SKAction.removeFromParent()
-        slime.run(remove)
-        playerName.run(remove)
+        player.physicsBody?.isDynamic = false
+        player.removeFromParent()
+        playerName.removeFromParent()
         
         if(wrong){
             alertLabel.text = "Wrong Answer"
@@ -190,6 +163,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if(wrong){
                 rmDimBG()
                 createPlayer()
+                isStart = true
                 alertLabel.removeFromParent()
             }else{
                 //kalo player menang..
@@ -199,8 +173,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func nextRound(){
-        if(loader.round < 3){
+        
+//        if round masih ada
+        if(loader.round < 6){
             loader.round += 1
+            matchManager.handleRoundWinner(winner: matchManager.localPlayerData)
             
             //remove all parents
             loader.mazeObstacles.removeFromParent()
@@ -225,27 +202,110 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-//    func startCountdown() {
-//        countdownTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] timer in
-//            guard let self = self else {
-//                timer.invalidate()
-//                return
-//            }
-//
-//            if self.counter > 0 {
-//                self.countdownLabel.text = "\(self.counter)"
-//                self.counter -= 1
-//            } else if self.counter == 0{
-//                self.countdownLabel.text = "Go!"
-//                self.counter -= 1
-//            }else{
-//                // Call a function to handle the end of the countdown
-//                timer.invalidate()
-//                self.countdownLabel.text = ""
-//                self.countdownFinished()
-//            }
-//        }
-//    }
+    func setSprite(){
+//            set water char for host, sun char for player
+        if matchManager.localPlayerData.role == .host{
+
+        //        Adding player texture
+            for i in 1...5{
+                let textureName = "water_\(i)"
+                playerTextureArray.append(SKTexture(imageNamed: textureName))
+            }
+        
+//            Adding opponent texture
+            for i in 1...5{
+                let textureName = "sun_\(i)"
+                opponentTextureArray.append(SKTexture(imageNamed: textureName))
+            }
+            
+            
+        }else{
+            
+            for i in 1...5{
+                let textureName = "sun_\(i)"
+                playerTextureArray.append(SKTexture(imageNamed: textureName))
+            }
+        
+            for i in 1...5{
+                let textureName = "water_\(i)"
+                opponentTextureArray.append(SKTexture(imageNamed: textureName))
+            }
+        }
+        
+    }
+    
+    func createPlayer(){
+        player.removeFromParent()
+        
+        //        adding player sprite
+        if playerTextureArray.count > 1{
+            let imageFrame = playerTextureArray.first
+            let size = CGFloat(loader.squareMinSize) * 0.9
+
+            player = SKSpriteNode(texture: imageFrame)
+//            player.position = CGPoint(x: Double(UIScreen.main.bounds.width/2) - Double(loader.squareMinSize), y: Double(loader.squareMinSize*1.5))
+            player.position = playerStartPos
+            print("myPos cp: ", matchManager.myPosition)
+            player.size = CGSize(width: size, height: size)
+//            player.physicsBody = SKPhysicsBody(texture: player.texture!,size: player.texture!.size())
+            player.physicsBody = SKPhysicsBody(texture: player.texture!,size: CGSize(width: size, height: size))
+            player.physicsBody?.allowsRotation = false
+            player.physicsBody?.categoryBitMask = CollisionTypes.player.rawValue
+            player.physicsBody?.collisionBitMask = CollisionTypes.wall.rawValue | CollisionTypes.opponent.rawValue
+            player.physicsBody?.contactTestBitMask = CollisionTypes.spike.rawValue | CollisionTypes.finish.rawValue | CollisionTypes.finish_correct.rawValue
+            player.zPosition = 1.0
+            addChild(player)
+        }
+        
+        player.run(SKAction.repeatForever(SKAction.animate(with: playerTextureArray, timePerFrame: 0.1)))
+        
+        //add player name along with the slime
+        playerName.removeFromParent()
+//        nti di ganti pakai data player
+        playerName.text = matchManager.localPlayer.displayName
+        playerName.fontName = "AvenirNext-HeavyItalic"
+        playerName.color = .white
+        playerName.fontSize = 10
+        playerName.position = player.position
+        playerName.zPosition = player.zPosition
+        addChild(playerName)
+    }
+    
+    func createOpponent(){
+        //        adding player sprite
+        if opponentTextureArray.count > 1{
+            let imageFrame = opponentTextureArray.first
+            let size = CGFloat(loader.squareMinSize) * 0.9
+
+            opponent = SKSpriteNode(texture: imageFrame)
+//            opponent.position = CGPoint(x: Double(UIScreen.main.bounds.width/2) + Double(loader.squareMinSize), y: Double(loader.squareMinSize*1.5))
+            opponent.position = opponentStartPos
+            print("opponentPos: ", matchManager.opponentPosition)
+            opponent.size = CGSize(width: size, height: size)
+//            player.physicsBody = SKPhysicsBody(texture: player.texture!,size: player.texture!.size())
+            opponent.physicsBody = SKPhysicsBody(texture: opponent.texture!,size: CGSize(width: size, height: size))
+            opponent.physicsBody?.allowsRotation = false
+            opponent.physicsBody?.affectedByGravity = false
+            opponent.physicsBody?.categoryBitMask = CollisionTypes.opponent.rawValue
+            opponent.physicsBody?.collisionBitMask = CollisionTypes.wall.rawValue | CollisionTypes.player.rawValue
+            opponent.physicsBody?.contactTestBitMask = CollisionTypes.spike.rawValue | CollisionTypes.finish.rawValue | CollisionTypes.finish_correct.rawValue
+            opponent.zPosition = 1.0
+            addChild(opponent)
+        }
+        
+        opponent.run(SKAction.repeatForever(SKAction.animate(with: opponentTextureArray, timePerFrame: 0.1)))
+        
+        //add opponent name along with the slime
+        opponentName.removeFromParent()
+//        nti di ganti pakai data player
+        opponentName.text = matchManager.otherPlayer!.displayName
+        opponentName.fontName = "AvenirNext-HeavyItalic"
+        opponentName.color = .white
+        opponentName.fontSize = 10
+        opponentName.position = opponent.position
+        opponentName.zPosition = opponent.zPosition
+        addChild(opponentName)
+    }
     
     func startCountdown() {
         countdownTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] timer in
@@ -267,7 +327,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             else {
                 timer.invalidate()
                 self.countdownLabel.text = ""
-                self.countdownFinished()
                 self.rmDimBG()
             }
         }
@@ -284,16 +343,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let time = Double(counter) + 0.5
         DispatchQueue.main.asyncAfter(deadline: .now() + time) { [self] in
             loadGravity()
+            playerStartPos = matchManager.myPosition
+            opponentStartPos = matchManager.opponentPosition
             self.createPlayer()
+            self.createOpponent()
+            isStart = true
             self.countdownLabel.removeFromParent()
             self.addChild(loader.answers)
         }
-    }
-    
-
-    func countdownFinished() {
-        // Implement your logic here when the countdown finishes
-        // For example, start a game, show a message, etc.
     }
     
     func dimBG(){
@@ -344,52 +401,33 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    
     override func update(_ currentTime: TimeInterval) {
-        // Called before each frame is rendered
-        playerName.position = CGPoint(x: slime.position.x, y: slime.position.y - CGFloat(loader.squareMinSize / 1.5))
-
-        // Check if there is accelerometer data available
-        if let accelerometerData = accelerometerData {
-            
-//            print("there is data")
-            // Calculate the acceleration magnitude (you can adjust the sensitivity as needed)
-            let accelerationMagnitude = sqrt(accelerometerData.x * accelerometerData.x + accelerometerData.y * accelerometerData.y + accelerometerData.z * accelerometerData.z)
-            
-//            print("magnitude: ", accelerationMagnitude)
-            
-            // Adjust the animation speed based on the acceleration magnitude
-            //most fast
-            let maxTimePerFrame: TimeInterval = 0.1 // Set the maximum time per frame (adjust as needed)
-            //most slow
-            let minTimePerFrame: TimeInterval = 1.0 // Set the minimum time per frame (adjust as needed)
-            
-            let normalizedTimePerFrame = (accelerationMagnitude - minAccelerationMagnitude) / (maxAccelerationMagnitude - minAccelerationMagnitude) * (maxTimePerFrame - minTimePerFrame) + minTimePerFrame
-            
-//            print("normalized: ", normalizedTimePerFrame)
-//            print("textureArray: ", textureArray)
-            
-            // Only update the animation if the acceleration magnitude changes significantly
-            if abs(accelerationMagnitude - lastAccelerationMagnitude) > 0.05 {
-                if isAnimationRunning {
-                    if slime.action(forKey: "animationAction") != nil {
-                        let updatedAction = SKAction.animate(with: textureArray, timePerFrame: normalizedTimePerFrame)
-                        slime.run(updatedAction, withKey: "animationAction")
-                    }
-                } else {
-                    // Start the animation only if it's not running yet
-                    let animationAction = SKAction.animate(with: textureArray, timePerFrame: normalizedTimePerFrame)
-                    let repeatAction = SKAction.repeatForever(animationAction)
-                    slime.run(repeatAction, withKey: "animationAction")
-                    isAnimationRunning = true
-                }
-                
-                lastAccelerationMagnitude = accelerationMagnitude
-            }
-            
-            
-        }
         
+//        update player name position
+        playerName.position = CGPoint(x: player.position.x, y: player.position.y - CGFloat(loader.squareMinSize / 1.5))
+        
+        if isStart{
+            //        get myposition coordinate
+            let currentX: CGFloat = (player.position.x  - loader.marginLeft) / CGFloat(loader.squareMinSize)
+            let currentY: CGFloat = (player.position.y - loader.marginBottom) / CGFloat(loader.squareMinSize)
+            
+            //        renew myPosition in coordinate
+            matchManager.myPosition = CGPoint(x: currentX, y: currentY)
+            
+            //        Send ball data to opponent
+            //        matchManager.updatePosition()
+            
+            //        alternate way using NSKeyed:
+            //        send our ball coordinate to opponent
+            matchManager.sendBallPosition(position: matchManager.myPosition)
+            
+            //        set opponent ball position in our device
+            let opponentX = (matchManager.opponentPosition.x * CGFloat(loader.squareMinSize)) + loader.marginLeft
+            let opponentY = ( matchManager.opponentPosition.y * CGFloat(loader.squareMinSize)) + loader.marginBottom
+            opponent.position = CGPoint(x: opponentX, y: opponentY)
+            opponentName.position = CGPoint(x: opponent.position.x, y: opponent.position.y - CGFloat(loader.squareMinSize / 1.5))
+
+        }
         
     }
     
@@ -397,14 +435,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     deinit {
         manager.stopAccelerometerUpdates()
     }
-    
 }
 
 struct GameView: View {
+    @ObservedObject var matchManager: MatchManager
     let displaySize: CGRect = UIScreen.main.bounds
-    
+
     var scene: SKScene {
-        let scene = GameScene()
+        let scene = GameScene(size: CGSize(width: displaySize.width, height: displaySize.height), matchManager: matchManager)
         
         scene.size = CGSize(width: displaySize.width, height: displaySize.height)
         scene.scaleMode = .fill
@@ -428,6 +466,6 @@ struct GameView: View {
 
 struct GameView_Previews: PreviewProvider {
     static var previews: some View {
-        GameView()
+        GameView(matchManager: MatchManager())
     }
 }
