@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DAD672BE2A8F51C6007C103A /* StartGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD672B22A8F51C6007C103A /* StartGame.swift */; };
+		DAD672C12A8F51C6007C103A /* EndOfRound.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD672B52A8F51C6007C103A /* EndOfRound.swift */; };
+		DAD672C22A8F51C6007C103A /* GameData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD672B62A8F51C6007C103A /* GameData.swift */; };
+		DAD672C52A8F51C6007C103A /* MatchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD672BA2A8F51C6007C103A /* MatchManager.swift */; };
+		DAD672CC2A8F5292007C103A /* MathSolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD672CA2A8F5292007C103A /* MathSolver.swift */; };
+		DAD672CD2A8F5292007C103A /* LoadMaze.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD672CB2A8F5292007C103A /* LoadMaze.swift */; };
+		DAD672D12A8F52AF007C103A /* round2.txt in Resources */ = {isa = PBXBuildFile; fileRef = DAD672CF2A8F52AF007C103A /* round2.txt */; };
+		DAD672D22A8F52AF007C103A /* round1.txt in Resources */ = {isa = PBXBuildFile; fileRef = DAD672D02A8F52AF007C103A /* round1.txt */; };
 		DAE022872A78F67B00172C97 /* MathoDashApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE022862A78F67B00172C97 /* MathoDashApp.swift */; };
 		DAE022892A78F67B00172C97 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE022882A78F67B00172C97 /* ContentView.swift */; };
 		DAE0228B2A78F67D00172C97 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DAE0228A2A78F67D00172C97 /* Assets.xcassets */; };
@@ -14,6 +22,8 @@
 		DAE022982A78F67D00172C97 /* MathoDashTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE022972A78F67D00172C97 /* MathoDashTests.swift */; };
 		DAE022A22A78F67D00172C97 /* MathoDashUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE022A12A78F67D00172C97 /* MathoDashUITests.swift */; };
 		DAE022A42A78F67D00172C97 /* MathoDashUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE022A32A78F67D00172C97 /* MathoDashUITestsLaunchTests.swift */; };
+		DAE022B52A7A3F0A00172C97 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE022B42A7A3F0A00172C97 /* GameView.swift */; };
+		DAE022B72A7A3F1E00172C97 /* GameOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE022B62A7A3F1E00172C97 /* GameOverView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +44,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DAD672B22A8F51C6007C103A /* StartGame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartGame.swift; sourceTree = "<group>"; };
+		DAD672B52A8F51C6007C103A /* EndOfRound.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EndOfRound.swift; path = ../EndOfRound.swift; sourceTree = "<group>"; };
+		DAD672B62A8F51C6007C103A /* GameData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameData.swift; path = ../GameData.swift; sourceTree = "<group>"; };
+		DAD672BA2A8F51C6007C103A /* MatchManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchManager.swift; sourceTree = "<group>"; };
+		DAD672CA2A8F5292007C103A /* MathSolver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MathSolver.swift; sourceTree = "<group>"; };
+		DAD672CB2A8F5292007C103A /* LoadMaze.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadMaze.swift; sourceTree = "<group>"; };
+		DAD672CF2A8F52AF007C103A /* round2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = round2.txt; sourceTree = "<group>"; };
+		DAD672D02A8F52AF007C103A /* round1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = round1.txt; sourceTree = "<group>"; };
 		DAE022832A78F67B00172C97 /* MathoDash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MathoDash.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAE022862A78F67B00172C97 /* MathoDashApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathoDashApp.swift; sourceTree = "<group>"; };
 		DAE022882A78F67B00172C97 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -44,6 +62,9 @@
 		DAE0229D2A78F67D00172C97 /* MathoDashUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MathoDashUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAE022A12A78F67D00172C97 /* MathoDashUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathoDashUITests.swift; sourceTree = "<group>"; };
 		DAE022A32A78F67D00172C97 /* MathoDashUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathoDashUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		DAE022B02A78F91E00172C97 /* MathoDash.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MathoDash.entitlements; sourceTree = "<group>"; };
+		DAE022B42A7A3F0A00172C97 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
+		DAE022B62A7A3F1E00172C97 /* GameOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +92,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DAD672B02A8F51C6007C103A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				DAD672B52A8F51C6007C103A /* EndOfRound.swift */,
+				DAD672B62A8F51C6007C103A /* GameData.swift */,
+				DAD672B22A8F51C6007C103A /* StartGame.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		DAD672B92A8F51C6007C103A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				DAD672CB2A8F5292007C103A /* LoadMaze.swift */,
+				DAD672CA2A8F5292007C103A /* MathSolver.swift */,
+				DAD672BA2A8F51C6007C103A /* MatchManager.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		DAD672CE2A8F529C007C103A /* Files */ = {
+			isa = PBXGroup;
+			children = (
+				DAD672D02A8F52AF007C103A /* round1.txt */,
+				DAD672CF2A8F52AF007C103A /* round2.txt */,
+			);
+			path = Files;
+			sourceTree = "<group>";
+		};
 		DAE0227A2A78F67B00172C97 = {
 			isa = PBXGroup;
 			children = (
@@ -94,8 +144,12 @@
 		DAE022852A78F67B00172C97 /* MathoDash */ = {
 			isa = PBXGroup;
 			children = (
+				DAD672CE2A8F529C007C103A /* Files */,
+				DAD672B02A8F51C6007C103A /* Model */,
+				DAD672B92A8F51C6007C103A /* ViewModel */,
+				DAE022B32A7A3EF700172C97 /* Views */,
+				DAE022B02A78F91E00172C97 /* MathoDash.entitlements */,
 				DAE022862A78F67B00172C97 /* MathoDashApp.swift */,
-				DAE022882A78F67B00172C97 /* ContentView.swift */,
 				DAE0228A2A78F67D00172C97 /* Assets.xcassets */,
 				DAE0228C2A78F67D00172C97 /* Preview Content */,
 			);
@@ -125,6 +179,16 @@
 				DAE022A32A78F67D00172C97 /* MathoDashUITestsLaunchTests.swift */,
 			);
 			path = MathoDashUITests;
+			sourceTree = "<group>";
+		};
+		DAE022B32A7A3EF700172C97 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				DAE022882A78F67B00172C97 /* ContentView.swift */,
+				DAE022B42A7A3F0A00172C97 /* GameView.swift */,
+				DAE022B62A7A3F1E00172C97 /* GameOverView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -231,6 +295,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAD672D12A8F52AF007C103A /* round2.txt in Resources */,
+				DAD672D22A8F52AF007C103A /* round1.txt in Resources */,
 				DAE0228E2A78F67D00172C97 /* Preview Assets.xcassets in Resources */,
 				DAE0228B2A78F67D00172C97 /* Assets.xcassets in Resources */,
 			);
@@ -257,8 +323,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAD672CD2A8F5292007C103A /* LoadMaze.swift in Sources */,
+				DAD672BE2A8F51C6007C103A /* StartGame.swift in Sources */,
+				DAD672C52A8F51C6007C103A /* MatchManager.swift in Sources */,
+				DAE022B72A7A3F1E00172C97 /* GameOverView.swift in Sources */,
+				DAD672C22A8F51C6007C103A /* GameData.swift in Sources */,
 				DAE022892A78F67B00172C97 /* ContentView.swift in Sources */,
+				DAE022B52A7A3F0A00172C97 /* GameView.swift in Sources */,
 				DAE022872A78F67B00172C97 /* MathoDashApp.swift in Sources */,
+				DAD672CC2A8F5292007C103A /* MathSolver.swift in Sources */,
+				DAD672C12A8F51C6007C103A /* EndOfRound.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -414,6 +488,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MathoDash/MathoDash.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MathoDash/Preview Content\"";
@@ -423,8 +499,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationLandscapeRight;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -432,6 +507,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = kelly.MathoDash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -443,6 +519,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MathoDash/MathoDash.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MathoDash/Preview Content\"";
@@ -452,8 +530,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationLandscapeRight;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -461,6 +538,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = kelly.MathoDash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
