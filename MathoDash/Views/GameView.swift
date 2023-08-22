@@ -58,7 +58,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private var countdownTimer: Timer?
     
     //alert text for wrong answers
-    private var alertLabel: SKLabelNode!
+    private var alertLabel: MKOutlinedLabelNode!
     private var questionLabel: SKLabelNode!
     private var readyBtn: SKSpriteNode!
 
@@ -118,6 +118,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func playerCollided(with node: SKNode){
+        var sound = SKAction.playSoundFileNamed("tap.wav", waitForCompletion: false)
+        run(sound)
         if node.name == "spike"{
             
             isStart = false
@@ -141,9 +143,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func wrongAns(){
         isStart = false
-        alertLabel = SKLabelNode(fontNamed: "LuckiestGuy-Regular")
+        alertLabel = MKOutlinedLabelNode(fontNamed: "LuckiestGuy-Regular", fontSize: 80)
         alertLabel.text = "Wrong Answer"
-        alertLabel.fontSize = 80
         alertLabel.position = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2)
         alertLabel.zPosition = dimmed.zPosition + 1
         alertLabel.verticalAlignmentMode = .center
@@ -176,9 +177,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if win{
             matchManager.handleRoundWinner(winner: matchManager.localPlayerData)
         }
-        alertLabel = SKLabelNode(fontNamed: "LuckiestGuy-Regular")
-        alertLabel.fontSize = 80
-        alertLabel.position = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2 + CGFloat(loader.squareMinSize * 3))
+        alertLabel = MKOutlinedLabelNode(fontNamed: "LuckiestGuy-Regular", fontSize: 100)
+        alertLabel.borderColor = UIColor.white
+        alertLabel.fontColor = UIColor(Color("orange"))
+        alertLabel.borderWidth = 20
+        alertLabel.position = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2 + CGFloat(loader.squareMinSize * 2))
         alertLabel.zPosition = dimmed.zPosition + 1
         alertLabel.verticalAlignmentMode = .center
         alertLabel.fontColor = UIColor(Color("lightYellow"))
@@ -192,13 +195,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if(win){
             alertLabel.text = "You Win!"
+            var sound = SKAction.playSoundFileNamed("winner.wav", waitForCompletion: false)
+            run(sound)
         }else{
             alertLabel.text = "You Lost!"
+            var sound = SKAction.playSoundFileNamed("loser.wav", waitForCompletion: false)
+            run(sound)
         }
         
         readyBtn = SKSpriteNode(imageNamed: "ready")
         readyBtn.name = "readyBtn"
-        readyBtn.size = CGSize(width: Double(loader.squareMinSize * 8.0), height: Double(loader.squareMinSize * 2.0))
+        readyBtn.size = CGSize(width: Double(loader.squareMinSize * 5.0), height: Double(loader.squareMinSize * 5/4))
         readyBtn.position = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2 - CGFloat(loader.squareMinSize))
         readyBtn.zPosition = alertLabel.zPosition
         self.addChild(readyBtn)
@@ -453,6 +460,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         for touch in touches {
             let location = touch.location(in: self)
             if let readyBtn = readyBtn, readyBtn.contains(location)  {
+                self.readyBtn.texture = SKTexture(imageNamed: "ready_disabled")
+                let waiting = SKLabelNode(fontNamed: "LuckiestGuy-Regular")
+                waiting.fontSize = 20
+                waiting.position = CGPoint(x: UIScreen.main.bounds.width/2, y: self.readyBtn.position.y - self.readyBtn.size.height/2 - 20.0)
+                waiting.zPosition = self.readyBtn.zPosition
+                waiting.fontColor = UIColor(Color("orange"))
+                waiting.text = "waiting for the host..."
+                self.addChild(waiting)
+
+                let fadeInAction = SKAction.fadeIn(withDuration: 0.5)
+                waiting.alpha = 0.0
+                waiting.run(fadeInAction)
+                
+                let fadeOutAction = SKAction.fadeOut(withDuration: 0.2)
+//                let fadeInAction = SKAction.fadeIn(withDuration: 0.2)
+                let fadeSequence = SKAction.sequence([fadeOutAction, fadeInAction])
+                
+                self.readyBtn.run(fadeSequence)
+                
+                
                 // Handle button tap action here
                 if matchManager.localPlayerData.role == Role.host{
 //                    kalau player ready duluan
