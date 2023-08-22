@@ -10,5 +10,6 @@ import Foundation
 struct EndOfRound: Codable{
     var roundWinner : String
     var isPlayerReady : Bool
+    var isHostReady : Bool
 }
 

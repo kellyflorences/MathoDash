@@ -23,7 +23,7 @@ class MatchManager: UIViewController, ObservableObject, GKGameCenterControllerDe
     
     @Published var isGameOver = false
     
-    @Published var gameState = State.lobby
+    @Published var gameState = GameState.lobby
     
     var match: GKMatch?
     var otherPlayer: GKPlayer?
@@ -190,13 +190,13 @@ class MatchManager: UIViewController, ObservableObject, GKGameCenterControllerDe
             let opponentPositionY = (opponentPosition.y - loader.marginBottom) / CGFloat(loader.squareMinSize)
             
 //            generate gameData
-            coreGameData = GameData(HostPlayerData: localPlayerData, PlayerPlayerData: otherPlayerData, rounds: round, gameState: State.startGame, startGame: StartGame(PlayerPosition: CGPoint(x: opponentPositionX, y: opponentPositionY) , HostPosition: CGPoint(x: myPositionX, y: myPositionY), isFinished: false))
+            coreGameData = GameData(HostPlayerData: localPlayerData, PlayerPlayerData: otherPlayerData, rounds: round, gameState: GameState.startGame, startGame: StartGame(PlayerPosition: CGPoint(x: opponentPositionX, y: opponentPositionY) , HostPosition: CGPoint(x: myPositionX, y: myPositionY), isFinished: false))
             
             //send to other player
             sendGameData(data: coreGameData!)
             
 //            set new state
-            self.gameState = State.startGame
+            self.gameState = GameState.startGame
         
         }// else do nothing
         
@@ -243,12 +243,15 @@ class MatchManager: UIViewController, ObservableObject, GKGameCenterControllerDe
                 break
 
             case .endOfRound:
-                if gameData.endOfRound?.isPlayerReady == true{
+                if gameData.endOfRound?.isPlayerReady == true && gameData.endOfRound?.isHostReady == true{
 //                    set new rounds
                     round += 1
                     
-//                   set new data
-                    
+//                   set new data (Start Game)
+                    gameState = GameState.startGame
+                    coreGameData?.rounds = round
+                    coreGameData?.gameState = gameState
+                    sendGameData(data: coreGameData!)
                     
                 }
                 break
@@ -264,7 +267,6 @@ class MatchManager: UIViewController, ObservableObject, GKGameCenterControllerDe
             case .lobby:
 //                samain coreGameData
                 coreGameData = gameData
-                
                 
 //                samain role
                 if localPlayer.gamePlayerID == gameData.HostPlayerData?.gamePlayerID{
@@ -306,8 +308,8 @@ class MatchManager: UIViewController, ObservableObject, GKGameCenterControllerDe
                 }else{
 //                    Kalau state beda, update state player
                     gameState = gameData.gameState
-                    print("player dah eor")
-                    
+                    coreGameData = gameData
+//                    lanjut ngecek button clicked or not di gameView
                 }
                 break
 
@@ -349,11 +351,11 @@ class MatchManager: UIViewController, ObservableObject, GKGameCenterControllerDe
             }
                             
 //         send data game state yang baru
-            coreGameData?.gameState = State.endOfRound
-            coreGameData?.endOfRound = EndOfRound(roundWinner: (winner.gamePlayerID), isPlayerReady: false)
+            coreGameData?.gameState = GameState.endOfRound
+            coreGameData?.endOfRound = EndOfRound(roundWinner: (winner.gamePlayerID), isPlayerReady: false, isHostReady: false)
                                             
             sendGameData(data: coreGameData!)
-            gameState = State.endOfRound
+            gameState = GameState.endOfRound
             
         }else{
             coreGameData?.startGame?.isFinished = true

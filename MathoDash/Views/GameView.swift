@@ -169,7 +169,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         xAcceleration = acceleration
     }
     
-    func doneFinish(win: Bool){
+    func doneFinish(win: Bool = false){
         alertLabel = SKLabelNode(fontNamed: "AvenirNext-HeavyItalic")
         alertLabel.fontSize = 80
         alertLabel.position = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2 + CGFloat(loader.squareMinSize * 3))
@@ -196,14 +196,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         readyBtn.position = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2 - CGFloat(loader.squareMinSize))
         readyBtn.zPosition = alertLabel.zPosition
         self.addChild(readyBtn)
+        
+//        send data if someone finished
+        matchManager.handleRoundWinner(winner: matchManager.localPlayerData)
     }
     
     func nextRound(){
         
 //        if round masih ada
-        if(loader.round < 6){
-            loader.round += 1
-            matchManager.handleRoundWinner(winner: matchManager.localPlayerData)
+        if(matchManager.round < 6){
+            loader.round = matchManager.round
             
             //remove all parents
             loader.mazeObstacles.removeFromParent()
@@ -399,10 +401,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         manager.startAccelerometerUpdates(to: OperationQueue.main){
             (data, error) in
             
-            
 //            self.physicsWorld.gravity = CGVectorMake(CGFloat((data?.acceleration.x)!) * 10, CGFloat((data?.acceleration.y)!) * 10)
             self.physicsWorld.gravity = CGVectorMake(CGFloat((data?.acceleration.y)!) * -10, CGFloat((data?.acceleration.x)!) * 10)
-
 
             self.physicsWorld.contactDelegate = self
             self.physicsBody = SKPhysicsBody(edgeLoopFrom: self.frame)
@@ -427,6 +427,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        guard !touches.isEmpty else {
+//                print("touches is empty")
+//                return
+//            }
+
         for touch in touches {
             let location = touch.location(in: self)
             if let readyBtn = readyBtn, readyBtn.contains(location)  {
@@ -444,6 +449,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func update(_ currentTime: TimeInterval) {
 //        update player name position
         playerName.position = CGPoint(x: player.position.x, y: player.position.y - CGFloat(loader.squareMinSize / 1.5))
+        
+//        check if player already lose (state change)
+        if matchManager.gameState == GameState.endOfRound {
+            isStart = false
+            // if the loser is host, then the isFinished is true, etc
+            if matchManager.localPlayerData.role == Role.host{
+                if matchManager.coreGameData?.startGame?.isFinished == true{
+                    doneFinish()
+                }
+                
+            }else{
+                if matchManager.coreGameData?.startGame?.isFinished == false{
+                    doneFinish()
+                }
+            }
+        }
+        
         
         if isStart{
             //        get myposition coordinate

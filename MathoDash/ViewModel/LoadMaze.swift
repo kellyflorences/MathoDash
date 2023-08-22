@@ -10,6 +10,7 @@ import UIKit
 import SpriteKit
 
 class LoadMaze: ObservableObject{
+//    var matchManager = MatchManager()
     var round: Int = 1
     var solver = MathSolver()
     var question: String = ""

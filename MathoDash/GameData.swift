@@ -9,7 +9,7 @@ import Foundation
 import GameKit
 
 
-enum State: UInt, Codable{
+enum GameState: UInt, Codable{
     case lobby = 0
     case startGame = 1
     case endOfRound = 2
@@ -27,7 +27,7 @@ struct GameData: Codable{
     var rounds : Int?
     
 //    Game State
-    var gameState : State
+    var gameState : GameState
     
     var startGame : StartGame?
     
