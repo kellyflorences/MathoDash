@@ -24,6 +24,7 @@
 		DAE022A42A78F67D00172C97 /* MathoDashUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE022A32A78F67D00172C97 /* MathoDashUITestsLaunchTests.swift */; };
 		DAE022B52A7A3F0A00172C97 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE022B42A7A3F0A00172C97 /* GameView.swift */; };
 		DAE022B72A7A3F1E00172C97 /* GameOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE022B62A7A3F1E00172C97 /* GameOverView.swift */; };
+		DAF9E9562A944C3100EA1B6E /* LuckiestGuy-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DAF9E9552A944C0B00EA1B6E /* LuckiestGuy-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,8 @@
 		DAE022B02A78F91E00172C97 /* MathoDash.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MathoDash.entitlements; sourceTree = "<group>"; };
 		DAE022B42A7A3F0A00172C97 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		DAE022B62A7A3F1E00172C97 /* GameOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverView.swift; sourceTree = "<group>"; };
+		DAF9E9552A944C0B00EA1B6E /* LuckiestGuy-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "LuckiestGuy-Regular.ttf"; sourceTree = "<group>"; };
+		DAF9E95A2A944E2200EA1B6E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +147,8 @@
 		DAE022852A78F67B00172C97 /* MathoDash */ = {
 			isa = PBXGroup;
 			children = (
+				DAF9E95A2A944E2200EA1B6E /* Info.plist */,
+				DAF9E9542A944BFF00EA1B6E /* fonts */,
 				DAD672CE2A8F529C007C103A /* Files */,
 				DAD672B02A8F51C6007C103A /* Model */,
 				DAD672B92A8F51C6007C103A /* ViewModel */,
@@ -189,6 +194,14 @@
 				DAE022B62A7A3F1E00172C97 /* GameOverView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		DAF9E9542A944BFF00EA1B6E /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				DAF9E9552A944C0B00EA1B6E /* LuckiestGuy-Regular.ttf */,
+			);
+			path = fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -298,6 +311,7 @@
 				DAD672D12A8F52AF007C103A /* round2.txt in Resources */,
 				DAD672D22A8F52AF007C103A /* round1.txt in Resources */,
 				DAE0228E2A78F67D00172C97 /* Preview Assets.xcassets in Resources */,
+				DAF9E9562A944C3100EA1B6E /* LuckiestGuy-Regular.ttf in Resources */,
 				DAE0228B2A78F67D00172C97 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -496,6 +510,7 @@
 				DEVELOPMENT_TEAM = TG4T97CU5T;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MathoDash/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -527,6 +542,7 @@
 				DEVELOPMENT_TEAM = TG4T97CU5T;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MathoDash/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
