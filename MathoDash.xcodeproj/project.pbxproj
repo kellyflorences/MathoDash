@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DABF06472A94A00E002A6551 /* winner.wav in Resources */ = {isa = PBXBuildFile; fileRef = DABF06442A94A00E002A6551 /* winner.wav */; };
+		DABF06482A94A00E002A6551 /* loser.wav in Resources */ = {isa = PBXBuildFile; fileRef = DABF06452A94A00E002A6551 /* loser.wav */; };
+		DABF06492A94A00E002A6551 /* tap.wav in Resources */ = {isa = PBXBuildFile; fileRef = DABF06462A94A00E002A6551 /* tap.wav */; };
 		DAD672BE2A8F51C6007C103A /* StartGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD672B22A8F51C6007C103A /* StartGame.swift */; };
 		DAD672C12A8F51C6007C103A /* EndOfRound.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD672B52A8F51C6007C103A /* EndOfRound.swift */; };
 		DAD672C22A8F51C6007C103A /* GameData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD672B62A8F51C6007C103A /* GameData.swift */; };
@@ -25,6 +28,9 @@
 		DAE022B52A7A3F0A00172C97 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE022B42A7A3F0A00172C97 /* GameView.swift */; };
 		DAE022B72A7A3F1E00172C97 /* GameOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE022B62A7A3F1E00172C97 /* GameOverView.swift */; };
 		DAF9E9562A944C3100EA1B6E /* LuckiestGuy-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DAF9E9552A944C0B00EA1B6E /* LuckiestGuy-Regular.ttf */; };
+		DAF9E9642A945DC100EA1B6E /* round5.txt in Resources */ = {isa = PBXBuildFile; fileRef = DAF9E9612A945DC100EA1B6E /* round5.txt */; };
+		DAF9E9652A945DC100EA1B6E /* round3.txt in Resources */ = {isa = PBXBuildFile; fileRef = DAF9E9622A945DC100EA1B6E /* round3.txt */; };
+		DAF9E9662A945DC100EA1B6E /* round4.txt in Resources */ = {isa = PBXBuildFile; fileRef = DAF9E9632A945DC100EA1B6E /* round4.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +51,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DABF06442A94A00E002A6551 /* winner.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = winner.wav; sourceTree = "<group>"; };
+		DABF06452A94A00E002A6551 /* loser.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = loser.wav; sourceTree = "<group>"; };
+		DABF06462A94A00E002A6551 /* tap.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = tap.wav; sourceTree = "<group>"; };
 		DAD672B22A8F51C6007C103A /* StartGame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartGame.swift; sourceTree = "<group>"; };
 		DAD672B52A8F51C6007C103A /* EndOfRound.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EndOfRound.swift; path = ../EndOfRound.swift; sourceTree = "<group>"; };
 		DAD672B62A8F51C6007C103A /* GameData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameData.swift; path = ../GameData.swift; sourceTree = "<group>"; };
@@ -68,6 +77,9 @@
 		DAE022B62A7A3F1E00172C97 /* GameOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverView.swift; sourceTree = "<group>"; };
 		DAF9E9552A944C0B00EA1B6E /* LuckiestGuy-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "LuckiestGuy-Regular.ttf"; sourceTree = "<group>"; };
 		DAF9E95A2A944E2200EA1B6E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		DAF9E9612A945DC100EA1B6E /* round5.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = round5.txt; sourceTree = "<group>"; };
+		DAF9E9622A945DC100EA1B6E /* round3.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = round3.txt; sourceTree = "<group>"; };
+		DAF9E9632A945DC100EA1B6E /* round4.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = round4.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +107,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DABF06432A94A004002A6551 /* Audios */ = {
+			isa = PBXGroup;
+			children = (
+				DABF06452A94A00E002A6551 /* loser.wav */,
+				DABF06462A94A00E002A6551 /* tap.wav */,
+				DABF06442A94A00E002A6551 /* winner.wav */,
+			);
+			path = Audios;
+			sourceTree = "<group>";
+		};
 		DAD672B02A8F51C6007C103A /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -120,6 +142,9 @@
 			children = (
 				DAD672D02A8F52AF007C103A /* round1.txt */,
 				DAD672CF2A8F52AF007C103A /* round2.txt */,
+				DAF9E9622A945DC100EA1B6E /* round3.txt */,
+				DAF9E9632A945DC100EA1B6E /* round4.txt */,
+				DAF9E9612A945DC100EA1B6E /* round5.txt */,
 			);
 			path = Files;
 			sourceTree = "<group>";
@@ -147,6 +172,7 @@
 		DAE022852A78F67B00172C97 /* MathoDash */ = {
 			isa = PBXGroup;
 			children = (
+				DABF06432A94A004002A6551 /* Audios */,
 				DAF9E95A2A944E2200EA1B6E /* Info.plist */,
 				DAF9E9542A944BFF00EA1B6E /* fonts */,
 				DAD672CE2A8F529C007C103A /* Files */,
@@ -310,8 +336,14 @@
 			files = (
 				DAD672D12A8F52AF007C103A /* round2.txt in Resources */,
 				DAD672D22A8F52AF007C103A /* round1.txt in Resources */,
+				DABF06472A94A00E002A6551 /* winner.wav in Resources */,
 				DAE0228E2A78F67D00172C97 /* Preview Assets.xcassets in Resources */,
+				DABF06492A94A00E002A6551 /* tap.wav in Resources */,
+				DABF06482A94A00E002A6551 /* loser.wav in Resources */,
+				DAF9E9642A945DC100EA1B6E /* round5.txt in Resources */,
+				DAF9E9662A945DC100EA1B6E /* round4.txt in Resources */,
 				DAF9E9562A944C3100EA1B6E /* LuckiestGuy-Regular.ttf in Resources */,
+				DAF9E9652A945DC100EA1B6E /* round3.txt in Resources */,
 				DAE0228B2A78F67D00172C97 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -507,7 +539,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MathoDash/Preview Content\"";
-				DEVELOPMENT_TEAM = TG4T97CU5T;
+				DEVELOPMENT_TEAM = 2A5D48389N;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MathoDash/Info.plist;
@@ -520,7 +552,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = sasa.MathoDash;
+				PRODUCT_BUNDLE_IDENTIFIER = kelly.MathoDash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -539,7 +571,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MathoDash/Preview Content\"";
-				DEVELOPMENT_TEAM = TG4T97CU5T;
+				DEVELOPMENT_TEAM = 2A5D48389N;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MathoDash/Info.plist;
@@ -552,7 +584,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = sasa.MathoDash;
+				PRODUCT_BUNDLE_IDENTIFIER = kelly.MathoDash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;

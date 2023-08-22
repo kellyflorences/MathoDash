@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import SpriteKit
+import SwiftUI
 
 class LoadMaze: ObservableObject{
 //    var matchManager = MatchManager()
@@ -181,7 +182,7 @@ class LoadMaze: ObservableObject{
         var aDone = false
         
         for i in 0..<3 {
-            let ans = SKLabelNode(fontNamed: "AvenirNext-HeavyItalic")
+            let ans = SKLabelNode(fontNamed: "LuckiestGuy-Regular")
             ans.fontSize = 20
             ans.position = CGPoint(x: finishPoints[i].x, y: finishPoints[i].y + CGFloat(squareMinSize / 1.8))
             ans.zPosition = 1
@@ -198,13 +199,19 @@ class LoadMaze: ObservableObject{
             answers.addChild(ans)
         }
         
-        let qstn = SKLabelNode(fontNamed: "AvenirNext-HeavyItalic")
-        qstn.fontSize = 20
-        qstn.position = CGPoint(x: CGFloat(squareMinSize * 3), y: UIScreen.main.bounds.height - CGFloat(squareMinSize))
-        qstn.zPosition = 1
+        let qstn = SKLabelNode(fontNamed: "LuckiestGuy-Regular")
+        qstn.fontSize = 30
+        qstn.position = CGPoint(x: Double(squareMinSize)*3/2, y: UIScreen.main.bounds.height - CGFloat(squareMinSize * 2))
+        qstn.zPosition = 3
         qstn.text = solver.question
+        qstn.fontColor = UIColor(Color("darkBlue"))
         answers.addChild(qstn)
         
+        let qstnBox = SKSpriteNode(imageNamed: "tempat soal.png")
+        qstnBox.size = CGSize(width: Double(squareMinSize)*3.75, height: Double(squareMinSize)*1.25)
+        qstnBox.position = CGPoint(x: qstnBox.size.width/2, y: qstn.position.y + CGFloat(squareMinSize)/4)
+        qstnBox.zPosition = 1
+        answers.addChild(qstnBox)
     }
     
 //    func setupMaze() {
