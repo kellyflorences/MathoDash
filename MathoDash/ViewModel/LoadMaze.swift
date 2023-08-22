@@ -56,6 +56,7 @@ class LoadMaze: ObservableObject{
         //Obstacle
         var node = SKSpriteNode()
         
+//        print("ANSWERRR", answerIndex, name)
         //set asset gambar
         if(name == "finish_correct"){
             node = SKSpriteNode(imageNamed: "finish")
@@ -115,13 +116,13 @@ class LoadMaze: ObservableObject{
         pinggiranMap.addChild(node)
         
         //load obstacles
-        guard let levelURL = Bundle.main.url(forResource: fileNameRound, withExtension: "txt") else {
-            fatalError("Could not find " + fileNameRound + ".txt in the app bundle.")
+        let filenameTxt = "round" + String(self.round)
+        guard let levelURL = Bundle.main.url(forResource: filenameTxt, withExtension: "txt") else {
+            fatalError("Could not find " + filenameTxt + ".txt in the app bundle.")
         }
         guard let levelString = try? String(contentsOf: levelURL) else {
             fatalError("Could not load level1.txt from the app bundle.")
         }
-
         let lines = levelString.components(separatedBy: "\n")
         
         var rowCount = 0
@@ -134,7 +135,7 @@ class LoadMaze: ObservableObject{
         let squareSize = CGSize(width: CGFloat(squareMinSize), height: CGFloat(squareMinSize))
 
         answerIndex = Int.random(in: 0..<3)
-        
+//        print(answerIndex)
         for (row, line) in lines.reversed().enumerated() {
             for (column, letter) in line.enumerated() {
                 let position = CGPoint(x: CGFloat(column) * squareSize.width + xOffset, y: CGFloat(row) * squareSize.height + yOffset)
@@ -171,6 +172,7 @@ class LoadMaze: ObservableObject{
             }
             rowCount += 1
         }
+//        mazeObstacles.removeFromParent()
     }
     
     func loadAnswers(){
@@ -201,7 +203,7 @@ class LoadMaze: ObservableObject{
         let qstn = SKLabelNode(fontNamed: "LuckiestGuy-Regular")
         qstn.fontSize = 30
         qstn.position = CGPoint(x: Double(squareMinSize)*3/2, y: UIScreen.main.bounds.height - CGFloat(squareMinSize * 2))
-        qstn.zPosition = 3
+        qstn.zPosition = 1
         qstn.text = solver.question
         qstn.fontColor = UIColor(Color("darkBlue"))
         answers.addChild(qstn)
@@ -209,7 +211,7 @@ class LoadMaze: ObservableObject{
         let qstnBox = SKSpriteNode(imageNamed: "tempat soal.png")
         qstnBox.size = CGSize(width: Double(squareMinSize)*3.75, height: Double(squareMinSize)*1.25)
         qstnBox.position = CGPoint(x: qstnBox.size.width/2, y: qstn.position.y + CGFloat(squareMinSize)/4)
-        qstnBox.zPosition = 1
+        qstnBox.zPosition = qstn.zPosition - 1
         answers.addChild(qstnBox)
     }
     

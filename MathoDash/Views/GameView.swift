@@ -216,12 +216,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //            remove label and button
             alertLabel.removeFromParent()
             readyBtn.removeFromParent()
+            loader.finishPoints = []
         
             loader.round = matchManager.round
             print("rounds nextround : ", loader.round)
             //remove all parents
             loader.mazeObstacles.removeFromParent()
             loader.pinggiranMap.removeFromParent()
+            loader.mazeObstacles.removeAllChildren()
+            loader.pinggiranMap.removeAllChildren()
             loader.answers.removeFromParent()
             self.removeAllChildren()
             

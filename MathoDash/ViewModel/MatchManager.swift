@@ -382,6 +382,7 @@ class MatchManager: UIViewController, ObservableObject, GKGameCenterControllerDe
             
         }else{
             coreGameData?.startGame?.isFinished = true
+            coreGameData?.PlayerPlayerData = localPlayerData
             
             sendGameData(data: coreGameData!)
         }
