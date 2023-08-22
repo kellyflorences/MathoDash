@@ -183,18 +183,24 @@ class LoadMaze: ObservableObject{
         var aDone = false
         
         for i in 0..<3 {
-            let ans = SKLabelNode(fontNamed: "LuckiestGuy-Regular")
-            ans.fontSize = 20
-            ans.position = CGPoint(x: finishPoints[i].x, y: finishPoints[i].y + CGFloat(squareMinSize / 1.8))
+//            let ans = SKLabelNode(fontNamed: "AvenirNext-HeavyItalic")
+            let ans = MKOutlinedLabelNode(fontNamed: "LuckiestGuy-Regular", fontSize: 32)
+            ans.borderColor = UIColor.white
+            ans.fontColor = UIColor(Color("orange"))
+            ans.borderWidth = 2
+//            ans.outlinedText = "Level 1"
+            
+//            ans.fontSize = 20
+            ans.position = CGPoint(x: finishPoints[i].x, y: finishPoints[i].y + CGFloat(squareMinSize / 1.5))
             ans.zPosition = 1
             if(i == answerIndex){
-                ans.text = "bnr" + solver.answer
+                ans.outlinedText = "bnr" + solver.answer
             }else{
                 if(!aDone){
-                    ans.text = solver.choiceA
+                    ans.outlinedText = solver.choiceA
                     aDone = true
                 }else{
-                    ans.text = solver.choiceB
+                    ans.outlinedText = solver.choiceB
                 }
             }
             answers.addChild(ans)

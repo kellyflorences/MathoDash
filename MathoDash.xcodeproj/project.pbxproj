@@ -10,6 +10,7 @@
 		DABF06472A94A00E002A6551 /* winner.wav in Resources */ = {isa = PBXBuildFile; fileRef = DABF06442A94A00E002A6551 /* winner.wav */; };
 		DABF06482A94A00E002A6551 /* loser.wav in Resources */ = {isa = PBXBuildFile; fileRef = DABF06452A94A00E002A6551 /* loser.wav */; };
 		DABF06492A94A00E002A6551 /* tap.wav in Resources */ = {isa = PBXBuildFile; fileRef = DABF06462A94A00E002A6551 /* tap.wav */; };
+		DABF06542A94FB87002A6551 /* MKOutlinedLabelNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABF06532A94FB87002A6551 /* MKOutlinedLabelNode.swift */; };
 		DAD672BE2A8F51C6007C103A /* StartGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD672B22A8F51C6007C103A /* StartGame.swift */; };
 		DAD672C12A8F51C6007C103A /* EndOfRound.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD672B52A8F51C6007C103A /* EndOfRound.swift */; };
 		DAD672C22A8F51C6007C103A /* GameData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD672B62A8F51C6007C103A /* GameData.swift */; };
@@ -54,6 +55,7 @@
 		DABF06442A94A00E002A6551 /* winner.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = winner.wav; sourceTree = "<group>"; };
 		DABF06452A94A00E002A6551 /* loser.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = loser.wav; sourceTree = "<group>"; };
 		DABF06462A94A00E002A6551 /* tap.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = tap.wav; sourceTree = "<group>"; };
+		DABF06532A94FB87002A6551 /* MKOutlinedLabelNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKOutlinedLabelNode.swift; sourceTree = "<group>"; };
 		DAD672B22A8F51C6007C103A /* StartGame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartGame.swift; sourceTree = "<group>"; };
 		DAD672B52A8F51C6007C103A /* EndOfRound.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EndOfRound.swift; path = ../EndOfRound.swift; sourceTree = "<group>"; };
 		DAD672B62A8F51C6007C103A /* GameData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameData.swift; path = ../GameData.swift; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 		DAD672B92A8F51C6007C103A /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				DABF06532A94FB87002A6551 /* MKOutlinedLabelNode.swift */,
 				DAD672CB2A8F5292007C103A /* LoadMaze.swift */,
 				DAD672CA2A8F5292007C103A /* MathSolver.swift */,
 				DAD672BA2A8F51C6007C103A /* MatchManager.swift */,
@@ -370,6 +373,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DAD672CD2A8F5292007C103A /* LoadMaze.swift in Sources */,
+				DABF06542A94FB87002A6551 /* MKOutlinedLabelNode.swift in Sources */,
 				DAD672BE2A8F51C6007C103A /* StartGame.swift in Sources */,
 				DAD672C52A8F51C6007C103A /* MatchManager.swift in Sources */,
 				DAE022B72A7A3F1E00172C97 /* GameOverView.swift in Sources */,

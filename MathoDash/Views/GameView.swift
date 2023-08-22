@@ -309,7 +309,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         playerName.removeFromParent()
 //        nti di ganti pakai data player
         playerName.text = matchManager.localPlayer.displayName
-        playerName.fontName = "LuckiestGuy-Regular"
+        playerName.fontName = "Avenir-MediumOblique"
         playerName.color = .white
         playerName.fontSize = 10
         playerName.position = player.position
@@ -345,9 +345,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         opponentName.removeFromParent()
 //        nti di ganti pakai data player
         opponentName.text = matchManager.otherPlayer!.displayName
-        opponentName.fontName = "LuckiestGuy-Regular"
+        opponentName.fontName = "Avenir-MediumOblique"
         opponentName.color = .white
-        opponentName.fontSize = 10
+        opponentName.fontSize = 12
         opponentName.position = opponent.position
         opponentName.zPosition = opponent.zPosition
         addChild(opponentName)
