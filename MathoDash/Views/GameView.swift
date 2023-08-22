@@ -141,7 +141,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func wrongAns(){
         isStart = false
-        alertLabel = SKLabelNode(fontNamed: "AvenirNext-HeavyItalic")
+        alertLabel = SKLabelNode(fontNamed: "LuckiestGuy-Regular")
         alertLabel.text = "Wrong Answer"
         alertLabel.fontSize = 80
         alertLabel.position = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2)
@@ -176,7 +176,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if win{
             matchManager.handleRoundWinner(winner: matchManager.localPlayerData)
         }
-        alertLabel = SKLabelNode(fontNamed: "AvenirNext-HeavyItalic")
+        alertLabel = SKLabelNode(fontNamed: "LuckiestGuy-Regular")
         alertLabel.fontSize = 80
         alertLabel.position = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2 + CGFloat(loader.squareMinSize * 3))
         alertLabel.zPosition = dimmed.zPosition + 1
@@ -306,7 +306,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         playerName.removeFromParent()
 //        nti di ganti pakai data player
         playerName.text = matchManager.localPlayer.displayName
-        playerName.fontName = "AvenirNext-HeavyItalic"
+        playerName.fontName = "LuckiestGuy-Regular"
         playerName.color = .white
         playerName.fontSize = 10
         playerName.position = player.position
@@ -342,7 +342,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         opponentName.removeFromParent()
 //        nti di ganti pakai data player
         opponentName.text = matchManager.otherPlayer!.displayName
-        opponentName.fontName = "AvenirNext-HeavyItalic"
+        opponentName.fontName = "LuckiestGuy-Regular"
         opponentName.color = .white
         opponentName.fontSize = 10
         opponentName.position = opponent.position
@@ -374,7 +374,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
         
-        countdownLabel = SKLabelNode(fontNamed: "AvenirNext-HeavyItalic")
+        countdownLabel = SKLabelNode(fontNamed: "LuckiestGuy-Regular")
         countdownLabel.fontSize = 100
         countdownLabel.position = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2)
         countdownLabel.verticalAlignmentMode = .center

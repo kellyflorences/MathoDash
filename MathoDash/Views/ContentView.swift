@@ -12,7 +12,7 @@ import GameKit
 
 struct ContentView: View {
     @StateObject var matchManager = MatchManager()
-//    @State var isShrunk = false
+    @State private var isShrunk = false
     
     var body: some View {
         NavigationStack{
@@ -47,9 +47,13 @@ struct ContentView: View {
                         }
 //                        .frame(width: isShrunk ? 50 : 100, height: isShrunk ? 50 : 100)
 //                        .animation(Animation.easeInOut(duration: 1.0).repeatForever(autoreverses: true))
-//                        .onTapGesture {
+                        .scaleEffect(isShrunk ? 1:0)
+                        .onAppear() {
 //                            isShrunk.toggle()
-//                        }
+                            withAnimation(.easeInOut) {
+                                self.isShrunk.toggle()
+                            }
+                        }
                         
                         Spacer()
                     }
