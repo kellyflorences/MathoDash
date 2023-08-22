@@ -184,7 +184,7 @@ class LoadMaze: ObservableObject{
         
         for i in 0..<3 {
 //            let ans = SKLabelNode(fontNamed: "AvenirNext-HeavyItalic")
-            let ans = MKOutlinedLabelNode(fontNamed: "LuckiestGuy-Regular", fontSize: 32)
+            let ans = MKOutlinedLabelNode(fontNamed: "LuckiestGuy-Regular", fontSize: 40)
             ans.borderColor = UIColor.white
             ans.fontColor = UIColor(Color("orange"))
             ans.borderWidth = 2
