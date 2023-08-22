@@ -1,11 +1,11 @@
 PPPPFPPPFPPPFPPPP
-P              PP
-P               P
-P P  P     P    P
-P    X P WPP P PP
-PS P  P P X P   P
-P           P PPP
-P P PPPP P      P
-P P W P      P WP
-P     PP P SS   P
+P  S   P  P   S P
+P    P PS PP  PPP
+PPP XP  P  W X PP
+P     PPPP   W  P
+P P WS  P  P   PP
+P PP   PPPPP P  P
+P P  P S     X  P
+P   PP     P   SP
+PX  PP P P     PP
 PPPPPPPPPPPPPPPPP
