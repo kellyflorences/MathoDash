@@ -135,7 +135,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             wrongAns()
         }else if node.name == "finish_correct"{
             print("BENAR WKWK")
-            doneFinish(win: true) //ini boolean diisi true/false berdasarkan player nya menang ato kalah
+            doneFinish(win: true)//ini boolean diisi true/false berdasarkan player nya menang ato kalah
         }
     }
     
@@ -170,6 +170,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func doneFinish(win: Bool = false){
+        
+        print("doneFinish: ", win)
+//        send data if someone finished
+        if win{
+            matchManager.handleRoundWinner(winner: matchManager.localPlayerData)
+        }
         alertLabel = SKLabelNode(fontNamed: "LuckiestGuy-Regular")
         alertLabel.fontSize = 80
         alertLabel.position = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2 + CGFloat(loader.squareMinSize * 3))
@@ -197,16 +203,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         readyBtn.zPosition = alertLabel.zPosition
         self.addChild(readyBtn)
         
-//        send data if someone finished
-        matchManager.handleRoundWinner(winner: matchManager.localPlayerData)
+
     }
     
     func nextRound(){
         
 //        if round masih ada
         if(matchManager.round < 6){
-            loader.round = matchManager.round
+//            set newRound flag to false
+            matchManager.newRound = false
             
+//            remove label and button
+            alertLabel.removeFromParent()
+            readyBtn.removeFromParent()
+        
+            loader.round = matchManager.round
+            print("rounds nextround : ", loader.round)
             //remove all parents
             loader.mazeObstacles.removeFromParent()
             loader.pinggiranMap.removeFromParent()
@@ -222,11 +234,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             loader.loadAnswers()
             
+
+            
             //countdown
             startCountdown()
             dimBG()
+            print("start next round")
         }else{
-            
+//            panggil gameOver View here
         }
     }
     
@@ -436,12 +451,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let location = touch.location(in: self)
             if let readyBtn = readyBtn, readyBtn.contains(location)  {
                 // Handle button tap action here
+                if matchManager.localPlayerData.role == Role.host{
+//                    kalau player ready duluan
+                    if matchManager.coreGameData?.endOfRound?.isPlayerReady == true{
+                        print("masuk ke")
+                        matchManager.handleNewRound()
+                        nextRound()
+                    }else{
+//                        kalau host ready duluan
+                        matchManager.coreGameData?.endOfRound?.isHostReady = true
+                        matchManager.sendGameData(data: matchManager.coreGameData!)
+//                        menunggu isPlayerready, standby di matchManager host
+                    }
+                }else{
+//                    kalau player, tugasnya cuma send isPlayerReady.
+                    matchManager.coreGameData?.endOfRound?.isPlayerReady = true
+                    matchManager.sendGameData(data: matchManager.coreGameData!)
+                }
                 print("Play button tapped!")
-                rmDimBG()
-//                createPlayer()
-                alertLabel.removeFromParent()
-                readyBtn.removeFromParent()
-                nextRound()
+//                rmDimBG()
+////                createPlayer()
+//                alertLabel.removeFromParent()
+//                readyBtn.removeFromParent()
+                
             }
         }
     }
@@ -453,16 +485,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //        check if player already lose (state change)
         if matchManager.gameState == GameState.endOfRound {
             isStart = false
-            // if the loser is host, then the isFinished is true, etc
-            if matchManager.localPlayerData.role == Role.host{
-                if matchManager.coreGameData?.startGame?.isFinished == true{
+            if matchManager.alreadyEnded{
+    //            check if the player has lost or not
+                if matchManager.localPlayerData.gamePlayerID !=
+                    matchManager.coreGameData?.endOfRound?.roundWinner {
                     doneFinish()
+                    matchManager.alreadyEnded = false
+
                 }
-                
-            }else{
-                if matchManager.coreGameData?.startGame?.isFinished == false{
-                    doneFinish()
-                }
+            }
+
+        }
+        
+        if matchManager.gameState == GameState.startGame {
+            if matchManager.newRound {
+                nextRound()
             }
         }
         

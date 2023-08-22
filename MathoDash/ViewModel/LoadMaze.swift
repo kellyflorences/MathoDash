@@ -11,7 +11,6 @@ import SpriteKit
 import SwiftUI
 
 class LoadMaze: ObservableObject{
-//    var matchManager = MatchManager()
     var round: Int = 1
     var solver = MathSolver()
     var question: String = ""
