@@ -11,6 +11,8 @@
 		DABF06482A94A00E002A6551 /* loser.wav in Resources */ = {isa = PBXBuildFile; fileRef = DABF06452A94A00E002A6551 /* loser.wav */; };
 		DABF06492A94A00E002A6551 /* tap.wav in Resources */ = {isa = PBXBuildFile; fileRef = DABF06462A94A00E002A6551 /* tap.wav */; };
 		DABF06542A94FB87002A6551 /* MKOutlinedLabelNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABF06532A94FB87002A6551 /* MKOutlinedLabelNode.swift */; };
+		DABF06582A960553002A6551 /* countdown.wav in Resources */ = {isa = PBXBuildFile; fileRef = DABF06572A960553002A6551 /* countdown.wav */; };
+		DABF065A2A96067A002A6551 /* bg_sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DABF06592A96067A002A6551 /* bg_sound.mp3 */; };
 		DAD672BE2A8F51C6007C103A /* StartGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD672B22A8F51C6007C103A /* StartGame.swift */; };
 		DAD672C12A8F51C6007C103A /* EndOfRound.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD672B52A8F51C6007C103A /* EndOfRound.swift */; };
 		DAD672C22A8F51C6007C103A /* GameData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD672B62A8F51C6007C103A /* GameData.swift */; };
@@ -56,6 +58,8 @@
 		DABF06452A94A00E002A6551 /* loser.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = loser.wav; sourceTree = "<group>"; };
 		DABF06462A94A00E002A6551 /* tap.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = tap.wav; sourceTree = "<group>"; };
 		DABF06532A94FB87002A6551 /* MKOutlinedLabelNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKOutlinedLabelNode.swift; sourceTree = "<group>"; };
+		DABF06572A960553002A6551 /* countdown.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = countdown.wav; sourceTree = "<group>"; };
+		DABF06592A96067A002A6551 /* bg_sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bg_sound.mp3; sourceTree = "<group>"; };
 		DAD672B22A8F51C6007C103A /* StartGame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartGame.swift; sourceTree = "<group>"; };
 		DAD672B52A8F51C6007C103A /* EndOfRound.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EndOfRound.swift; path = ../EndOfRound.swift; sourceTree = "<group>"; };
 		DAD672B62A8F51C6007C103A /* GameData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameData.swift; path = ../GameData.swift; sourceTree = "<group>"; };
@@ -112,6 +116,8 @@
 		DABF06432A94A004002A6551 /* Audios */ = {
 			isa = PBXGroup;
 			children = (
+				DABF06592A96067A002A6551 /* bg_sound.mp3 */,
+				DABF06572A960553002A6551 /* countdown.wav */,
 				DABF06452A94A00E002A6551 /* loser.wav */,
 				DABF06462A94A00E002A6551 /* tap.wav */,
 				DABF06442A94A00E002A6551 /* winner.wav */,
@@ -344,9 +350,11 @@
 				DABF06492A94A00E002A6551 /* tap.wav in Resources */,
 				DABF06482A94A00E002A6551 /* loser.wav in Resources */,
 				DAF9E9642A945DC100EA1B6E /* round5.txt in Resources */,
+				DABF065A2A96067A002A6551 /* bg_sound.mp3 in Resources */,
 				DAF9E9662A945DC100EA1B6E /* round4.txt in Resources */,
 				DAF9E9562A944C3100EA1B6E /* LuckiestGuy-Regular.ttf in Resources */,
 				DAF9E9652A945DC100EA1B6E /* round3.txt in Resources */,
+				DABF06582A960553002A6551 /* countdown.wav in Resources */,
 				DAE0228B2A78F67D00172C97 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
