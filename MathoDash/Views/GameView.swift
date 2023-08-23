@@ -137,7 +137,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             wrongAns()
         }else if node.name == "finish_correct"{
             print("BENAR WKWK")
-            doneFinish(win: true)//ini boolean diisi true/false berdasarkan player nya menang ato kalah
+            //            harus dilempar ke host dulu, baru di show siapa yg win siapa yang lose biar g ndobe
+            matchManager.handleRoundWinner(winner: matchManager.localPlayerData)
         }
     }
     
@@ -171,12 +172,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func doneFinish(win: Bool = false){
-        
-        print("doneFinish: ", win)
-//        send data if someone finished
-        if win{
-            matchManager.handleRoundWinner(winner: matchManager.localPlayerData)
-        }
         alertLabel = MKOutlinedLabelNode(fontNamed: "LuckiestGuy-Regular", fontSize: 100)
         alertLabel.borderColor = UIColor.white
         alertLabel.fontColor = UIColor(Color("orange"))
@@ -209,8 +204,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         readyBtn.position = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2 - CGFloat(loader.squareMinSize))
         readyBtn.zPosition = alertLabel.zPosition
         self.addChild(readyBtn)
-        
-
     }
     
     func nextRound(){
@@ -298,7 +291,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             player = SKSpriteNode(texture: imageFrame)
 //            player.position = CGPoint(x: Double(UIScreen.main.bounds.width/2) - Double(loader.squareMinSize), y: Double(loader.squareMinSize*1.5))
             player.position = playerStartPos
-            print("myPos cp: ", matchManager.myPosition)
+            print("myPos cp: ", playerStartPos)
             player.size = CGSize(width: size, height: size)
 //            player.physicsBody = SKPhysicsBody(texture: player.texture!,size: player.texture!.size())
             player.physicsBody = SKPhysicsBody(texture: player.texture!,size: CGSize(width: size, height: size))
@@ -466,7 +459,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 waiting.position = CGPoint(x: UIScreen.main.bounds.width/2, y: self.readyBtn.position.y - self.readyBtn.size.height/2 - 20.0)
                 waiting.zPosition = self.readyBtn.zPosition
                 waiting.fontColor = UIColor(Color("orange"))
-                waiting.text = "waiting for the host..."
+                waiting.text = "waiting for other player..."
                 self.addChild(waiting)
 
                 let fadeInAction = SKAction.fadeIn(withDuration: 0.5)
@@ -520,9 +513,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 if matchManager.localPlayerData.gamePlayerID !=
                     matchManager.coreGameData?.endOfRound?.roundWinner {
                     doneFinish()
-                    matchManager.alreadyEnded = false
-
+                }else{
+                    doneFinish(win: true)
                 }
+                matchManager.alreadyEnded = false
             }
 
         }
