@@ -53,7 +53,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private var isJumpEnabled: Bool = true // Flag to track jump availability
     
     // timer countdown
-    private var countdownLabel: SKLabelNode!
+    private var countdownLabel: MKOutlinedLabelNode!
     private var counter: Int = 7
     private var countdownTimer: Timer?
     
@@ -61,7 +61,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private var alertLabel: MKOutlinedLabelNode!
     private var questionLabel: SKLabelNode!
     private var readyBtn: SKSpriteNode!
-
+    var bgSound = SKAction.playSoundFileNamed("winner.wav", waitForCompletion: true)
     
     var dimmed = SKSpriteNode()
     
@@ -145,6 +145,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func wrongAns(){
         isStart = false
         alertLabel = MKOutlinedLabelNode(fontNamed: "LuckiestGuy-Regular", fontSize: 80)
+        alertLabel.borderColor = UIColor.white
         alertLabel.text = "Wrong Answer"
         alertLabel.position = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2)
         alertLabel.zPosition = dimmed.zPosition + 1
@@ -173,8 +174,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func doneFinish(win: Bool = false){
         alertLabel = MKOutlinedLabelNode(fontNamed: "LuckiestGuy-Regular", fontSize: 100)
+        alertLabel.text = "You Win!"
         alertLabel.borderColor = UIColor.white
-        alertLabel.fontColor = UIColor(Color("orange"))
         alertLabel.borderWidth = 20
         alertLabel.position = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2 + CGFloat(loader.squareMinSize * 2))
         alertLabel.zPosition = dimmed.zPosition + 1
@@ -240,6 +241,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
             
             //countdown
+            counter = 7
             startCountdown()
             dimBG()
             print("start next round")
@@ -354,6 +356,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func startCountdown() {
+        removeAction(forKey: self.bgSound.description)
+        
+        let fadeOutAction = SKAction.fadeOut(withDuration: 0.2)
+        let fadeInAction = SKAction.fadeIn(withDuration: 0.2)
+        let fadeSequence = SKAction.sequence([fadeOutAction, fadeInAction])
+        
         countdownTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] timer in
             guard let self = self else {
                 timer.invalidate()
@@ -363,6 +371,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if self.counter > 4 {
                 self.countdownLabel.text = "\(self.counter - 4)"
                 self.counter -= 1
+                self.countdownLabel.run(fadeSequence)
+                
+                if(self.counter == 6){
+                    var sound = SKAction.playSoundFileNamed("countdown.wav", waitForCompletion: false)
+                    run(sound)
+                }
             } else if self.counter == 4{
                 self.countdownLabel.text = "Go!"
                 self.counter -= 1
@@ -373,17 +387,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             else {
                 timer.invalidate()
                 self.countdownLabel.text = ""
+                self.countdownLabel.run(fadeOutAction)
                 self.rmDimBG()
+                
+                //wkwkwkwkwkwkk
             }
         }
         
-        countdownLabel = SKLabelNode(fontNamed: "LuckiestGuy-Regular")
-        countdownLabel.fontSize = 100
+        countdownLabel = MKOutlinedLabelNode(fontNamed: "LuckiestGuy-Regular", fontSize: 150)
+        countdownLabel.borderColor = UIColor.white
+        countdownLabel.borderWidth = 10
         countdownLabel.position = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2)
         countdownLabel.verticalAlignmentMode = .center
         countdownLabel.zPosition = 3
         countdownLabel.fontColor = UIColor(Color("lightYellow"))
-        addChild(countdownLabel)
+        self.addChild(countdownLabel)
         
         //what happens after timer ends
         let time = Double(counter) + 0.5
@@ -395,8 +413,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             isStart = true
             self.countdownLabel.removeFromParent()
             self.addChild(loader.answers)
+            
+            
         }
     }
+    
+    func playSoundLoop() {
+        let sound = SKAction.playSoundFileNamed("winner.wav", waitForCompletion: true)
+        let playSoundAction = SKAction.run { [weak self] in
+            self?.run(sound, completion: { [weak self] in
+                self?.playSoundLoop()
+            })
+        }
+        
+        bgSound = playSoundAction
+        run(playSoundAction)
+    }
+    
+//    func stopSoundLoop() {
+//        if let soundLoopAction = bgSound {
+//            removeAction(forKey: soundLoopAction.description)
+//            self.bgSound = nil
+//        }
+//    }
     
     func dimBG(){
         dimmed = SKSpriteNode(color: UIColor.black, size: self.size)

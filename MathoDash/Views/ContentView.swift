@@ -12,7 +12,7 @@ import GameKit
 
 struct ContentView: View {
     @StateObject var matchManager = MatchManager()
-    @State private var isShrunk = false
+    @State var scale = 1.0
     
     var body: some View {
         NavigationStack{
@@ -39,22 +39,20 @@ struct ContentView: View {
                         Button{
                             matchManager.matchMaking()
                         } label: {
-                            //                        Text("Multiplayer")
                             Image("home_button")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 250.0)
                         }
-//                        .frame(width: isShrunk ? 50 : 100, height: isShrunk ? 50 : 100)
-//                        .animation(Animation.easeInOut(duration: 1.0).repeatForever(autoreverses: true))
-                        .scaleEffect(isShrunk ? 1:0)
-                        .onAppear() {
-//                            isShrunk.toggle()
-                            withAnimation(.easeInOut) {
-                                self.isShrunk.toggle()
+                        .scaleEffect(scale)
+                        .onAppear {
+                            let baseAnimation = Animation.easeInOut(duration: 2)
+                            let repeated = baseAnimation.repeatForever(autoreverses: true)
+
+                            withAnimation(repeated) {
+                                scale = 0.9
                             }
                         }
-                        
                         Spacer()
                     }
                     .padding(.top, 50)

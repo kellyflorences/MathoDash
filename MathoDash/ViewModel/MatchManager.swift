@@ -437,7 +437,7 @@ class MatchManager: UIViewController, ObservableObject, GKGameCenterControllerDe
                 handleGameStateChange(gameData: gameData)
                 
             } catch{
-                print("Error receiving data: \(error)")
+//                print("Error receiving data: \(error)")
             }
         }
         
@@ -450,7 +450,7 @@ class MatchManager: UIViewController, ObservableObject, GKGameCenterControllerDe
                 let data = try NSKeyedArchiver.archivedData(withRootObject: position, requiringSecureCoding: false)
                 try match.sendData(toAllPlayers: data, with: .reliable)
             } catch {
-                print("Error sending data: \(error)")
+//                print("Error sending data: \(error)")
             }
         }
     }
