@@ -102,17 +102,24 @@ class MatchManager: UIViewController, ObservableObject, GKGameCenterControllerDe
         }
     }
     
-    
-    
-    func findMatch(for request: GKMatchRequest, withCompletionHandler completionHandler: ((GKMatch?, Error?) -> Void)? = nil) async{
+//    this func to start automatch
+    func findMatch(for request: GKMatchRequest, withCompletionHandler completionHandler: ((GKMatch?, Error?) -> Void)? = nil) {
         // Start automatch.
         print("auto match")
-        do {
-            match = try await GKMatchmaker.shared().findMatch(for: request)
-        } catch {
-            print("Error: \(error.localizedDescription).")
-            return
+        Task {
+            do {
+                let match = try await GKMatchmaker.shared().findMatch(for: request)
+                completionHandler?(match, nil) // Call the completion handler with the match
+            } catch {
+                completionHandler?(nil, error) // Call the completion handler with the error
+                print("Error: \(error.localizedDescription).")
+            }
         }
+    }
+    
+    func stopMatchMaking(){
+        // Call this function when you want to stop matchmaking
+        GKMatchmaker.shared().finishMatchmaking(for: match!)
     }
     
     func findPlayers(
@@ -160,6 +167,7 @@ class MatchManager: UIViewController, ObservableObject, GKGameCenterControllerDe
                 self.match?.disconnect()
                 
                 //reset game here
+                self.gameState = GameState.lobby
             })
         default:
             print("default")

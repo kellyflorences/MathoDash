@@ -154,13 +154,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         dimBG()
         
         player.physicsBody?.isDynamic = false
-        let remove = SKAction.removeFromParent()
-        player.run(remove)
-        playerName.run(remove)
+//        let remove = SKAction.removeFromParent()
+        
+        player.removeFromParent()
+        playerName.removeFromParent()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [self] in
             rmDimBG()
-            createPlayer()
+            self.createPlayer()
             isStart = true
             alertLabel.removeFromParent()
         }
