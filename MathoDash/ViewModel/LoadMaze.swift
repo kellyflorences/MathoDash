@@ -194,7 +194,7 @@ class LoadMaze: ObservableObject{
             ans.position = CGPoint(x: finishPoints[i].x, y: finishPoints[i].y + CGFloat(squareMinSize / 1.5))
             ans.zPosition = 1
             if(i == answerIndex){
-                ans.outlinedText = "bnr" + solver.answer
+                ans.outlinedText = solver.answer
             }else{
                 if(!aDone){
                     ans.outlinedText = solver.choiceA

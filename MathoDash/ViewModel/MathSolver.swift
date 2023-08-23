@@ -30,7 +30,7 @@ class MathSolver: ObservableObject{
             str_b = String(b)
         }
         
-        question = "\(a) x \(str_b) = \(c)"
+        question = "\(a)x \(str_b) = \(c)"
         solve(Double(a), Double(b), Double(c))
     }
     
