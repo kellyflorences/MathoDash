@@ -65,6 +65,7 @@ struct ContentView: View {
                 GameView(matchManager: matchManager)
             }else{
                 //                panggil game over view
+                GameOverView(matchManager: matchManager)
             }
             
         }

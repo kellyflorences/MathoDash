@@ -37,7 +37,7 @@ struct GameOverView: View {
             VStack{
                 HStack{
                     Button(action: {
-
+                        matchManager.gameState = GameState.lobby
                     }, label: {
                         Image("home_btn")
                             .resizable()

@@ -138,6 +138,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }else if node.name == "finish_correct"{
             print("BENAR WKWK")
             //            harus dilempar ke host dulu, baru di show siapa yg win siapa yang lose biar g ndobe
+            self.player.removeFromParent()
             matchManager.handleRoundWinner(winner: matchManager.localPlayerData)
         }
     }
@@ -248,6 +249,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             print("start next round")
         }else{
 //            panggil gameOver View here
+            matchManager.gameState = GameState.endOfGame
         }
     }
     
@@ -357,8 +359,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func startCountdown() {
-        removeAction(forKey: self.bgSound.description)
-        
         let fadeOutAction = SKAction.fadeOut(withDuration: 0.2)
         let fadeInAction = SKAction.fadeIn(withDuration: 0.2)
         let fadeSequence = SKAction.sequence([fadeOutAction, fadeInAction])
@@ -417,18 +417,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             
         }
-    }
-    
-    func playSoundLoop() {
-        let sound = SKAction.playSoundFileNamed("winner.wav", waitForCompletion: true)
-        let playSoundAction = SKAction.run { [weak self] in
-            self?.run(sound, completion: { [weak self] in
-                self?.playSoundLoop()
-            })
-        }
-        
-        bgSound = playSoundAction
-        run(playSoundAction)
     }
     
 //    func stopSoundLoop() {
