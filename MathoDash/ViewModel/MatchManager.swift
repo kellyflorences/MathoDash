@@ -184,7 +184,7 @@ class MatchManager: UIViewController, ObservableObject, GKGameCenterControllerDe
 //            set starting point on host device
             myPosition = CGPoint(x: (Double(UIScreen.main.bounds.width/2) - Double(loader.squareMinSize)), y: Double(loader.squareMinSize*1.5) + Double(loader.squareMinSize))
             
-            opponentPosition = CGPoint(x: (Double(UIScreen.main.bounds.width/2) + Double(loader.squareMinSize)), y: Double(loader.squareMinSize*1.5))
+            opponentPosition = CGPoint(x: (Double(UIScreen.main.bounds.width/2) + Double(loader.squareMinSize)), y: Double(loader.squareMinSize*1.5) + Double(loader.squareMinSize))
             
             print("myPos mm : ", myPosition)
             print("enemyPos mm : ", opponentPosition)
@@ -253,6 +253,7 @@ class MatchManager: UIViewController, ObservableObject, GKGameCenterControllerDe
             case .endOfRound:
 //                isHostReady di set di gameView
                 if gameData.endOfRound?.isPlayerReady == true && gameData.endOfRound?.isHostReady == true{
+                    
                     handleNewRound()
 //                    set newRound = true for host
                     newRound = true
@@ -316,25 +317,30 @@ class MatchManager: UIViewController, ObservableObject, GKGameCenterControllerDe
 //                    print("opponentPos: ",opponentPosition)
 //                    opponentPosition = gameData.startGame!.HostPosition
                 }else{
-                    
 //                    Kalau state beda, update state player
-//                    cek player menang / kalah
-                    if gameData.endOfRound?.roundWinner != localPlayerData.gamePlayerID{
-                        alreadyEnded = true
-                    }
+                    print("masuk StartGame")
                     gameState = gameData.gameState
+                    alreadyEnded = true
                     coreGameData = gameData
 //                    lanjut ngecek button clicked or not di gameView
                 }
                 break
 
             case .endOfRound:
-
+                
                 if gameData.gameState != gameState{
+                    if gameData.gameState == GameState.startGame{
+                        
+                        round = gameData.rounds!
+                        newRound = true
+                        print("masuk NewRound")
+                    }else{
+                        // do smt kalo endofGame
+                    }
+                    
                     gameState = gameData.gameState
-                    round = gameData.rounds!
-                    newRound = true
                 }
+                
 //                menerima data if host is ready & menerima data setelah ganti state
                 coreGameData = gameData
                 
@@ -363,8 +369,10 @@ class MatchManager: UIViewController, ObservableObject, GKGameCenterControllerDe
 //    ===========================================================
     
     func handleRoundWinner(winner : Player){
+        alreadyEnded = true
 //        cek player / host yg manggil functionnya
         if localPlayerData.role == .host{
+            
 //            Update Score,
 //            cek host yang menang / musuh yang menang
             if winner.gamePlayerID == localPlayerData.gamePlayerID{
@@ -392,6 +400,11 @@ class MatchManager: UIViewController, ObservableObject, GKGameCenterControllerDe
     
     func handleNewRound(){
         if localPlayerData.role == Role.host{
+            
+            
+//            reset isPlayerReady
+            coreGameData?.endOfRound?.isPlayerReady = false
+            
 //          set new rounds
             round += 1
             
