@@ -33,4 +33,6 @@ struct GameData: Codable{
     
     var endOfRound : EndOfRound?
     
+    var endOfGame : EndOfGame?
+    
 }

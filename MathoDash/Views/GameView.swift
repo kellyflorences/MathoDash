@@ -137,9 +137,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             wrongAns()
         }else if node.name == "finish_correct"{
             print("BENAR WKWK")
-            //            harus dilempar ke host dulu, baru di show siapa yg win siapa yang lose biar g ndobe
-            self.player.removeFromParent()
+            //            harus dilempar ke host dulu, baru di show siapa yg win siapa yang lose biar g ndobel
             matchManager.handleRoundWinner(winner: matchManager.localPlayerData)
+            self.player.removeFromParent()
         }
     }
     
@@ -175,6 +175,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func doneFinish(win: Bool = false){
+        
         alertLabel = MKOutlinedLabelNode(fontNamed: "LuckiestGuy-Regular", fontSize: 100)
         alertLabel.text = "You Win!"
         alertLabel.borderColor = UIColor.white
@@ -201,12 +202,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             run(sound)
         }
         
-        readyBtn = SKSpriteNode(imageNamed: "ready")
-        readyBtn.name = "readyBtn"
-        readyBtn.size = CGSize(width: Double(loader.squareMinSize * 5.0), height: Double(loader.squareMinSize * 5/4))
-        readyBtn.position = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2 - CGFloat(loader.squareMinSize))
-        readyBtn.zPosition = alertLabel.zPosition
-        self.addChild(readyBtn)
+        if matchManager.round == 5{
+            matchManager.round += 1
+            matchManager.handleNewRound()
+        }else{
+            readyBtn = SKSpriteNode(imageNamed: "ready")
+            readyBtn.name = "readyBtn"
+            readyBtn.size = CGSize(width: Double(loader.squareMinSize * 5.0), height: Double(loader.squareMinSize * 5/4))
+            readyBtn.position = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2 - CGFloat(loader.squareMinSize))
+            readyBtn.zPosition = alertLabel.zPosition
+            self.addChild(readyBtn)
+        }
+        
     }
     
     func nextRound(){

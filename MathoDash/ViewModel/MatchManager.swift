@@ -389,6 +389,7 @@ class MatchManager: UIViewController, ObservableObject, GKGameCenterControllerDe
                 scores[1] += 1
             }
                             
+            print("All Scores: ", scores)
 //         send data game state yang baru
             coreGameData?.gameState = GameState.endOfRound
             coreGameData?.endOfRound = EndOfRound(roundWinner: winner.gamePlayerID, isPlayerReady: false, isHostReady: false)
@@ -406,6 +407,12 @@ class MatchManager: UIViewController, ObservableObject, GKGameCenterControllerDe
 
     }
     
+    func handleBackToHome(){
+//        disconnect, back to lobby
+        gameState = GameState.lobby
+        round = 1
+    }
+    
     func handleNewRound(){
         if localPlayerData.role == Role.host{
             
@@ -414,13 +421,33 @@ class MatchManager: UIViewController, ObservableObject, GKGameCenterControllerDe
             coreGameData?.endOfRound?.isPlayerReady = false
             
 //          set new rounds
-            round += 1
+            if round < 6{
+                round += 1
+                
+    //          set new data (Start Game)
+                gameState = GameState.startGame
+                coreGameData?.rounds = round
+            }else{
+                
+//                get winner
+                var winner = ""
+                if scores[0] > scores[1]{
+                    winner = (coreGameData?.HostPlayerData!.gamePlayerID)!
+                }else{
+                    winner = (coreGameData?.PlayerPlayerData!.gamePlayerID)!
+                }
+                print("score Host: ", scores[0])
+                print("score Player: ", scores[1])
+                print("winner: ", winner)
+//                set new data (EndOfGame)
+                gameState = GameState.endOfGame
+                coreGameData?.endOfGame = EndOfGame(gameWinner: winner)
+            }
             
-//          set new data (Start Game)
-            gameState = GameState.startGame
-            coreGameData?.rounds = round
             coreGameData?.gameState = gameState
             sendGameData(data: coreGameData!)
+            
+
         }else{
             // sementara do nothing dulu klo player.. 
         }

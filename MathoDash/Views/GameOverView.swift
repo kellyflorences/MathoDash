@@ -25,19 +25,56 @@ struct GameOverView: View {
                     .frame(width: UIScreen.main.bounds.height)
                     .padding(.horizontal, 10)
                 
-                Image("winner_kuning") //kalo biru, "winner_biru"
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: UIScreen.main.bounds.width / 5)
-                    .padding(.horizontal, 10)
+//                pengecekan di host
+                if matchManager.localPlayerData.role == Role.host{
+//                    kalau host menang
+                    if matchManager.coreGameData?.endOfGame?.gameWinner == matchManager.localPlayerData.gamePlayerID {
+                        
+                        Image("winner_biru") //kalo biru, "winner_biru"
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: UIScreen.main.bounds.width / 5)
+                            .padding(.horizontal, 10)
+                        
+                    }else{
+                        Image("winner_kuning") //kalo biru, "winner_biru"
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: UIScreen.main.bounds.width / 5)
+                            .padding(.horizontal, 10)
+                    }
+                   
+                }else{
+                    
+//                    pengecekan di player
+//                    kalau player menang
+                    
+                    if matchManager.coreGameData?.endOfGame?.gameWinner == matchManager.localPlayerData.gamePlayerID {
+                        
+                        
+                        Image("winner_kuning") //kalo biru, "winner_biru"
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: UIScreen.main.bounds.width / 5)
+                            .padding(.horizontal, 10)
+                        
+                    }else{
+                        Image("winner_biru") //kalo biru, "winner_biru"
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: UIScreen.main.bounds.width / 5)
+                            .padding(.horizontal, 10)
+                    }
 
+                }
+                
                 
             }
             
             VStack{
                 HStack{
                     Button(action: {
-                        matchManager.gameState = GameState.lobby
+                        matchManager.handleBackToHome()
                     }, label: {
                         Image("home_btn")
                             .resizable()
